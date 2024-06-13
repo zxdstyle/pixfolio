@@ -1,0 +1,70 @@
+.statsCard {
+  --hue: 223;
+  --bg: hsl(var(--hue),10%,90%);
+  --fg: hsl(var(--hue),10%,10%);
+  --trans-dur: 0.3s;
+  background-color: transparent;
+  outline: transparent;
+  position: relative;
+  width: 4.5em;
+  height: 4.5em;
+  perspective: 24em;
+  transform-style: preserve-3d;
+}
+
+.statsCardBlue .statsCardBack {
+  background: linear-gradient(hsl(var(--hue),90%,50%),hsl(208,90%,50%));
+}
+
+.statsCardGreen .statsCardBack {
+  background: linear-gradient(hsl(123,90%,40%),hsl(108,90%,40%));
+}
+.statsCardIndigo .statsCardBack {
+  background: linear-gradient(hsl(253,90%,50%),hsl(238,90%,50%));
+}
+.statsCardPurple .statsCardBack {
+  background: linear-gradient(hsl(283,90%,50%),hsl(268,90%,50%));
+}
+.statsCardRed .statsCardBack {
+  background: linear-gradient(hsl(3,90%,50%),hsl(348,90%,50%));
+}
+.statsCardOrange .statsCardBack {
+  background: linear-gradient(hsl(43,90%,50%),hsl(28,90%,50%));
+}
+
+.statsCardBack, .statsCardFront {
+  transition: opacity var(--trans-dur) cubic-bezier(0.83,0,0.17,1), transform var(--trans-dur) cubic-bezier(0.83,0,0.17,1);
+}
+
+.statsCardBack, .statsCardFront {
+  border-radius: 1.25em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.statsCardBack {
+  background: linear-gradient(hsl(var(--hue),10%,50%),hsl(208,10%,50%));
+  box-shadow: 0.5em -0.5em 0.75em hsla(var(--hue),10%,10%,0.15);
+  display: block;
+  transform: rotate(15deg);
+  transform-origin: 100% 100%;
+}
+
+.statsCardFront {
+  background-color: hsla(0,0%,100%,0.3);
+  box-shadow: 0 0 0 0.125em hsla(0,0%,100%,0.3) inset;
+  backdrop-filter: blur(0.75em);
+  display: flex;
+  transform-origin: 80% 50%;
+}
+
+.statsCard:focus-visible .statsCardBack,
+.statsCard:hover .statsCardBack {
+  transform: rotate(22.5deg);
+}
+.statsCard:focus-visible .statsCardFront,
+.statsCard:hover .statsCardFront {
+  transform: translateZ(3em) rotateX(20deg) rotateY(20deg);
+}
