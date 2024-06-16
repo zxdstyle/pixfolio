@@ -6,6 +6,8 @@
 export {}
 declare global {
   const IconBiDeviceHdd: typeof import('~icons/bi/device-hdd.jsx')['default']
+  const IconIconParkOutlineCloudStorage: typeof import('~icons/icon-park-outline/cloud-storage.jsx')['default']
   const IconMaterialSymbolsSettingsSuggestOutline: typeof import('~icons/material-symbols/settings-suggest-outline.jsx')['default']
+  const IconPhPlus: typeof import('~icons/ph/plus.jsx')['default']
   const IconSolarAlbumLinear: typeof import('~icons/solar/album-linear.jsx')['default']
 }

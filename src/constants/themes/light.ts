@@ -2,7 +2,14 @@ import type { ThemeConfig } from 'antd'
 
 const light: ThemeConfig = {
     token: {
-        borderRadius: 14,
+        colorPrimary: '#7366ff',
+        fontSize: 16,
+        colorTextBase: '#212529',
+    },
+    components: {
+        Button: {
+            fontWeight: 500,
+        },
     },
 }
 
