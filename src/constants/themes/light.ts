@@ -10,6 +10,9 @@ const light: ThemeConfig = {
         Button: {
             fontWeight: 500,
         },
+        Card: {
+            boxShadowTertiary: '0 0 20px rgba(115, 102, 255, 0.1)',
+        },
     },
 }
 
