@@ -22,9 +22,15 @@ const lang: ResourceLanguage = {
     session_token: 'Session token',
     sign_url_expire: 'Sign url expire',
     please_input: '请输入',
+    notifications: {
+        success: '成功',
+        deleteSuccess: '删除成功',
+        createSuccess: '创建成功',
+    },
     common: {
         create: '添加',
         update: '编辑',
+        delete: '删除',
         name: '名称',
     },
     buttons: {

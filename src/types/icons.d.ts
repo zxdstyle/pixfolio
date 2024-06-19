@@ -8,6 +8,12 @@ declare global {
   const IconBiDeviceHdd: typeof import('~icons/bi/device-hdd.jsx')['default']
   const IconIconParkOutlineCloudStorage: typeof import('~icons/icon-park-outline/cloud-storage.jsx')['default']
   const IconMaterialSymbolsSettingsSuggestOutline: typeof import('~icons/material-symbols/settings-suggest-outline.jsx')['default']
+  const IconPhDot: typeof import('~icons/ph/dot.jsx')['default']
+  const IconPhDots: typeof import('~icons/ph/dots.jsx')['default']
+  const IconPhDotsThreeBold: typeof import('~icons/ph/dots-three-bold.jsx')['default']
+  const IconPhMore: typeof import('~icons/ph/more.jsx')['default']
+  const IconPhNotePencil: typeof import('~icons/ph/note-pencil.jsx')['default']
   const IconPhPlus: typeof import('~icons/ph/plus.jsx')['default']
+  const IconPhTrash: typeof import('~icons/ph/trash.jsx')['default']
   const IconSolarAlbumLinear: typeof import('~icons/solar/album-linear.jsx')['default']
 }

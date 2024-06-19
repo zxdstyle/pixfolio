@@ -1,9 +1,10 @@
 import type { FormProps } from 'antd'
 import { Checkbox, Col, Form, InputNumber, Modal, Row, Space } from 'antd'
 import { useModalForm, useSelect } from '@refinedev/antd'
-import type { ReactElement } from 'react'
-import { cloneElement, useMemo } from 'react'
+import type { ReactElement, Ref } from 'react'
+import { cloneElement, forwardRef, useImperativeHandle, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { BaseKey } from '@refinedev/core'
 import { Input, Select } from '@/components/form'
 
 interface StorageFormProps {
@@ -11,14 +12,34 @@ interface StorageFormProps {
     children?: ReactElement
 }
 
-export function StorageModalForm({ id, children }: StorageFormProps) {
-    const { modalProps, formProps, show } = useModalForm({
+export interface StorageFormInstance {
+    show: (id?: BaseKey) => void
+    close: () => void
+}
+
+export default forwardRef(StorageModalForm)
+
+function StorageModalForm({ id, children }: StorageFormProps, ref: Ref<StorageFormInstance>) {
+    const [recordId, setRecordId] = useState<number>(id || 0)
+    const { modalProps, formProps, onFinish, show, close } = useModalForm({
         resource: 'storages',
-        action: id && id > 0 ? 'edit' : 'create',
-        id,
+        action: recordId && recordId > 0 ? 'edit' : 'create',
+        id: recordId,
     })
 
     const { t } = useTranslation()
+
+    const handleFinish = (values: any) => {
+        onFinish({ ...values, addition: JSON.stringify(values.addition) })
+    }
+
+    useImperativeHandle(ref, () => ({
+        show: (id) => {
+            show(id)
+            id && setRecordId(id)
+        },
+        close,
+    }))
 
     return (
         <>
@@ -34,7 +55,7 @@ export function StorageModalForm({ id, children }: StorageFormProps) {
                     </Space>
                 )}
             >
-                <StorageForm {...formProps} />
+                <StorageForm {...formProps} onFinish={handleFinish} />
             </Modal>
         </>
     )
@@ -77,26 +98,48 @@ export function StorageForm({ ...props }: FormProps) {
                 {
                     options.map(item => (
                         <Col key={item.name} span={12}>
-                            <Form.Item
-                                name={['addition', item.name]}
-                                label={t(item.name)}
-                                help={t(item.help)}
-                                initialValue={item.default}
-                                rules={[{ required: item.required }]}
-                            >
-                                { item.type === 'string' && <Input variant="underline" placeholder={`${t('please_input')} ${t(item.name)}`} />}
-                                { item.type === 'number' && <InputNumber placeholder={`${t('please_input')} ${t(item.name)}`} />}
-                                { item.type === 'select' && <Select variant="underline" placeholder={`${t('please_input')} ${t(item.name)}`} />}
-                                { item.type === 'bool' && (
-                                    <Checkbox>
-                                        {t(item.name)}
-                                    </Checkbox>
-                                )}
-                            </Form.Item>
+                            <FormItem {...item} />
                         </Col>
                     ))
                 }
             </Row>
         </Form>
+    )
+}
+
+function FormItem({ name, help, type, default: defaultValue, required }: AdditionItem) {
+    const { t } = useTranslation()
+
+    const initValue = useMemo(() => {
+        if (defaultValue === undefined)
+            return undefined
+
+        if (type === 'number')
+            return Number(defaultValue)
+
+        if (type === 'bool')
+            return !!defaultValue
+
+        return defaultValue
+    }, [defaultValue, type])
+
+    return (
+        <Form.Item
+            name={['addition', name]}
+            label={t(name)}
+            help={t(help)}
+            initialValue={initValue}
+            rules={[{ required }]}
+            valuePropName={type === 'bool' ? 'checked' : 'value'}
+        >
+            { type === 'string' && <Input variant="underline" placeholder={`${t('please_input')} ${t(name)}`} />}
+            { type === 'number' && <InputNumber placeholder={`${t('please_input')} ${t(name)}`} />}
+            { type === 'select' && <Select variant="underline" placeholder={`${t('please_input')} ${t(name)}`} />}
+            { type === 'bool' && (
+                <Checkbox>
+                    {t(name)}
+                </Checkbox>
+            )}
+        </Form.Item>
     )
 }
