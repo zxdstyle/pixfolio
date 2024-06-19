@@ -4,7 +4,8 @@ import { useModalForm, useSelect } from '@refinedev/antd'
 import type { ReactElement, Ref } from 'react'
 import { cloneElement, forwardRef, useImperativeHandle, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { BaseKey } from '@refinedev/core'
+import { objectify } from 'radash'
+import type { HttpError } from '@refinedev/core'
 import { Input, Select } from '@/components/form'
 
 interface StorageFormProps {
@@ -13,55 +14,62 @@ interface StorageFormProps {
 }
 
 export interface StorageFormInstance {
-    show: (id?: BaseKey) => void
+    show: (id?: number) => void
     close: () => void
 }
 
 export default forwardRef(StorageModalForm)
 
-function StorageModalForm({ id, children }: StorageFormProps, ref: Ref<StorageFormInstance>) {
-    const [recordId, setRecordId] = useState<number>(id || 0)
-    const { modalProps, formProps, onFinish, show, close } = useModalForm({
+function StorageModalForm({ children }: StorageFormProps, ref: Ref<StorageFormInstance>) {
+    const [recordId, setRecordId] = useState<number>(0)
+    const action = recordId && recordId > 0 ? 'edit' : 'create'
+    const { modalProps, formProps, onFinish, show, close } = useModalForm<IStorage, HttpError, IStorage>({
         resource: 'storages',
-        action: recordId && recordId > 0 ? 'edit' : 'create',
+        action,
         id: recordId,
+        onMutationSuccess: () => {
+            close()
+        },
     })
 
     const { t } = useTranslation()
-
     const handleFinish = (values: any) => {
         onFinish({ ...values, addition: JSON.stringify(values.addition) })
     }
 
+    function openModal(id?: number) {
+        show(id || 0)
+        setRecordId(id || 0)
+    }
+
     useImperativeHandle(ref, () => ({
-        show: (id) => {
-            show(id)
-            id && setRecordId(id)
-        },
+        show: openModal,
         close,
     }))
 
     return (
         <>
-            {children && cloneElement(children, {
-                onClick: () => show(),
-            })}
+            {children && cloneElement(children, { onClick: openModal })}
             <Modal
                 {...modalProps}
                 title={(
                     <Space>
                         <IconIconParkOutlineCloudStorage />
-                        {id && id > 0 ? `${t('common.update')}${t('storage.name')}` : `${t('common.create')}${t('storage.name')}`}
+                        {recordId && recordId > 0 ? `${t('common.update')}${t('storage.name')}` : `${t('common.create')}${t('storage.name')}`}
                     </Space>
                 )}
             >
-                <StorageForm {...formProps} onFinish={handleFinish} />
+                <StorageForm
+                    {...formProps}
+                    initialValues={action === 'edit' ? formProps.initialValues : {}}
+                    onFinish={handleFinish}
+                />
             </Modal>
         </>
     )
 }
 
-export function StorageForm({ ...props }: FormProps) {
+export function StorageForm({ initialValues = {}, ...props }: FormProps<IStorage>) {
     const { selectProps, queryResult } = useSelect<IDriver>({
         resource: 'drivers',
         optionLabel: 'name',
@@ -82,8 +90,22 @@ export function StorageForm({ ...props }: FormProps) {
 
     const { t } = useTranslation()
 
+    const initValues = useMemo(() => {
+        const defaultValues = objectify(
+            options,
+            f => f.name,
+            f => f.default,
+        )
+        const values = initialValues || {}
+        return {
+            ...values,
+            addition: values.addition ? { ...defaultValues, ...JSON.parse(values.addition) } : defaultValues,
+        }
+    }, [options, initialValues])
+
     return (
-        <Form {...props} layout="vertical">
+        <Form {...props} initialValues={initValues} layout="vertical">
+            {JSON.stringify(initValues)}
             <Row gutter={24}>
                 <Col span={6}>
                     <Form.Item name={['driver']} label={t('driver.name')} rules={[{ required: true }]}>
@@ -107,34 +129,39 @@ export function StorageForm({ ...props }: FormProps) {
     )
 }
 
-function FormItem({ name, help, type, default: defaultValue, required }: AdditionItem) {
+function FormItem({ name, help, type, required, options }: AdditionItem) {
     const { t } = useTranslation()
-
-    const initValue = useMemo(() => {
-        if (defaultValue === undefined)
-            return undefined
-
-        if (type === 'number')
-            return Number(defaultValue)
-
-        if (type === 'bool')
-            return !!defaultValue
-
-        return defaultValue
-    }, [defaultValue, type])
 
     return (
         <Form.Item
             name={['addition', name]}
             label={t(name)}
             help={t(help)}
-            initialValue={initValue}
             rules={[{ required }]}
             valuePropName={type === 'bool' ? 'checked' : 'value'}
+            normalize={(value) => {
+                if (value === undefined)
+                    return undefined
+
+                if (type === 'number') {
+                    return Number(value)
+                }
+
+                if (type === 'bool')
+                    return !!value
+
+                return value
+            }}
         >
             { type === 'string' && <Input variant="underline" placeholder={`${t('please_input')} ${t(name)}`} />}
             { type === 'number' && <InputNumber placeholder={`${t('please_input')} ${t(name)}`} />}
-            { type === 'select' && <Select variant="underline" placeholder={`${t('please_input')} ${t(name)}`} />}
+            { type === 'select' && (
+                <Select
+                    variant="underline"
+                    options={options.split(',').map(opt => ({ value: opt, label: opt }))}
+                    placeholder={`${t('please_input')} ${t(name)}`}
+                />
+            )}
             { type === 'bool' && (
                 <Checkbox>
                     {t(name)}

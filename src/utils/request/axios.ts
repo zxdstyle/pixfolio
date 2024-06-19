@@ -5,7 +5,14 @@ const axiosInstance = axios.create()
 
 axiosInstance.interceptors.response.use(
     (response) => {
-        return response
+        const { code, data, msg } = response.data
+        if (code === 0) {
+            response.data = data
+            return response
+        }
+
+        // eslint-disable-next-line prefer-promise-reject-errors
+        return Promise.reject({ message: msg, status: code })
     },
     (error) => {
         const customError: HttpError = {
