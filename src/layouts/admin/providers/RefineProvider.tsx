@@ -17,10 +17,28 @@ export default function RefineProvider({ children }: PropsWithChildren) {
 
     return (
         <Refine
-            dataProvider={dataProvider('http://localhost:8081/api/v1')}
+            dataProvider={dataProvider('/api/v1')}
             routerProvider={routerProvider}
             notificationProvider={useNotificationProvider}
             i18nProvider={i18nProvider}
+            resources={[
+                {
+                    name: 'dashboard',
+                    list: '/dashboard',
+                },
+                {
+                    name: 'storage',
+                    list: '/storages',
+                    show: '/storages/:id',
+                    meta: { icon: <IconIconParkOutlineCloudStorage />, parent: 'dashboard' },
+                },
+                {
+                    name: 'album',
+                    list: '/albums',
+                    show: '/albums/:id',
+                    meta: { icon: <IconSolarAlbumBroken />, parent: 'dashboard' },
+                },
+            ]}
         >
             {children}
         </Refine>

@@ -22,6 +22,10 @@ const lang: ResourceLanguage = {
     session_token: 'Session token',
     sign_url_expire: 'Sign url expire',
     please_input: '请输入',
+    dashboard: {
+        name: '控制台',
+        dashboard: '控制台',
+    },
     notifications: {
         success: '成功',
         deleteSuccess: '删除成功',
@@ -32,6 +36,8 @@ const lang: ResourceLanguage = {
         update: '编辑',
         delete: '删除',
         name: '名称',
+        sub_title: '副标题',
+        description: '描述',
     },
     buttons: {
         cancel: '取消',
@@ -42,6 +48,11 @@ const lang: ResourceLanguage = {
     },
     storage: {
         name: '存储',
+        storage: '存储',
+    },
+    album: {
+        name: '相册',
+        album: '相册',
     },
 }
 

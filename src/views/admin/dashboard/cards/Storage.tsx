@@ -10,7 +10,7 @@ export default function Storage({ className }: Props) {
         <StatsCard
             className={className}
             color="indigo"
-            uri="/storage"
+            uri="/storages"
             icon={<IconBiDeviceHdd slot="icon" className="text-white text-3xl" />}
         >
             <h1 className="text-3xl w-32 overflow-hidden text-ellipsis">

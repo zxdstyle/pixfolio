@@ -6,7 +6,7 @@ const axiosInstance = axios.create()
 axiosInstance.interceptors.response.use(
     (response) => {
         const { code, data, msg } = response.data
-        if (code === 0) {
+        if (code === 0 || response.status === 204) {
             response.data = data
             return response
         }
