@@ -15,15 +15,22 @@ export default {
         extend: {
             height: {
                 18: '4.5rem',
+                128: '32rem',
+                160: '40rem',
             },
             width: {
                 18: '4.5rem',
+            },
+            minWidth: {
+                128: '32rem',
+                160: '40rem',
             },
             rotate: {
                 15: '15deg',
             },
             animation: {
                 'bounce-slow': 'bounce-slow 4s infinite',
+                'left-in': 'left-in 1s',
             },
             keyframes: {
                 'bounce-slow': {
@@ -34,6 +41,16 @@ export default {
                     '50%': {
                         'transform': 'none',
                         'animation-timing-function': 'cubic-bezier(0,0,0.2,1)',
+                    },
+                },
+                'left-in': {
+                    '0%': {
+                        opacity: '0',
+                        transform: 'translate(-50px)',
+                    },
+                    '50%': {
+                        opacity: '1',
+                        transform: 'translate(0)',
                     },
                 },
             },

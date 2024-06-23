@@ -2,17 +2,12 @@ import type { CrudSorting } from '@refinedev/core'
 
 export function generateSort(sorters?: CrudSorting) {
     if (sorters && sorters.length > 0) {
-        const _sort: string[] = []
-        const _order: string[] = []
+        const sorts: Record<string, string> = {}
 
-        sorters.map((item) => {
-            _sort.push(item.field)
-            _order.push(item.order)
+        sorters.forEach((item) => {
+            sorts[`sort.${item.field}`] = item.order
         })
 
-        return {
-            _sort,
-            _order,
-        }
+        return sorts
     }
 }

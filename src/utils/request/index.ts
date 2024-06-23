@@ -26,8 +26,6 @@ export function dataProvider(apiUrl: string, httpClient: AxiosInstance = axiosIn
             const query: {
                 _start?: number
                 _end?: number
-                _sort?: string
-                _order?: string
             } = {}
 
             if (mode === 'server') {
@@ -36,13 +34,8 @@ export function dataProvider(apiUrl: string, httpClient: AxiosInstance = axiosIn
             }
 
             const generatedSort = generateSort(sorters)
-            if (generatedSort) {
-                const { _sort, _order } = generatedSort
-                query._sort = _sort.join(',')
-                query._order = _order.join(',')
-            }
 
-            const combinedQuery = { ...query, ...queryFilters }
+            const combinedQuery = { ...query, ...queryFilters, ...generatedSort }
             const urlWithQuery = Object.keys(combinedQuery).length
                 ? `${url}?${stringify.stringify(combinedQuery)}`
                 : url
@@ -54,7 +47,7 @@ export function dataProvider(apiUrl: string, httpClient: AxiosInstance = axiosIn
             const total = +headers['x-total-count']
 
             return {
-                data: data.data,
+                data,
                 total: total || data.length,
             }
         },
@@ -92,7 +85,7 @@ export function dataProvider(apiUrl: string, httpClient: AxiosInstance = axiosIn
             const url = `${apiUrl}/${resource}/${id}`
 
             const { headers, method } = meta ?? {}
-            const requestMethod = (method as MethodTypesWithBody) ?? 'patch'
+            const requestMethod = (method as MethodTypesWithBody) ?? 'put'
 
             const { data } = await httpClient[requestMethod](url, variables, {
                 headers,
@@ -150,12 +143,7 @@ export function dataProvider(apiUrl: string, httpClient: AxiosInstance = axiosIn
             if (sorters) {
                 const generatedSort = generateSort(sorters)
                 if (generatedSort) {
-                    const { _sort, _order } = generatedSort
-                    const sortQuery = {
-                        _sort: _sort.join(','),
-                        _order: _order.join(','),
-                    }
-                    requestUrl = `${requestUrl}&${stringify.stringify(sortQuery)}`
+                    requestUrl = `${requestUrl}&${stringify.stringify(generatedSort)}`
                 }
             }
 

@@ -12,9 +12,10 @@ export function Component() {
                 <div className={styles.wrapper}>
                     <Header />
 
-                    <Breadcrumb />
-
                     <main className="relative container">
+
+                        <Breadcrumb />
+
                         <Outlet />
                     </main>
                 </div>

@@ -9,7 +9,7 @@ export default function Album({ className }: Props) {
     return (
         <StatsCard
             className={className}
-            uri="/album"
+            uri="/albums"
             color="blue"
             icon={<IconSolarAlbumLinear slot="icon" className="text-white text-3xl" />}
         >

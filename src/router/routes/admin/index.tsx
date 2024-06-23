@@ -10,8 +10,12 @@ const routes: RouteObject[] = [
                 lazy: () => import('@/views/admin/dashboard'),
             },
             {
-                path: 'storage',
-                lazy: () => import('@/views/admin/storage'),
+                path: 'storages',
+                lazy: () => import('@/views/admin/storages'),
+            },
+            {
+                path: 'albums',
+                lazy: () => import('@/views/admin/albums'),
             },
         ],
     },
