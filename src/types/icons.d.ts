@@ -19,6 +19,7 @@ declare global {
   const IconPhNotePencil: typeof import('~icons/ph/note-pencil.jsx')['default']
   const IconPhPlus: typeof import('~icons/ph/plus.jsx')['default']
   const IconPhTrash: typeof import('~icons/ph/trash.jsx')['default']
+  const IconPhUploadSimpleBold: typeof import('~icons/ph/upload-simple-bold.jsx')['default']
   const IconSolarAlbumBroken: typeof import('~icons/solar/album-broken.jsx')['default']
   const IconSolarAlbumLinear: typeof import('~icons/solar/album-linear.jsx')['default']
   const IconTablerArrowNarrowLeft: typeof import('~icons/tabler/arrow-narrow-left.jsx')['default']

@@ -34,30 +34,32 @@ const MemoriedAlbumLists = memo<{
             <>
                 {contextHolder}
                 {data.map((item, i) => (
-                    <Card
-                        key={item.id}
-                        className="h-32 rounded-2xl overflow-hidden animate-left-in"
-                        bordered={false}
-                        styles={{
-                            body: { padding: 10 },
-                        }}
-                        style={{ animationDelay: `${i * 50}ms`, animationFillMode: 'backwards' }}
-                    >
-                        <Flex align="end" justify="space-between">
-                            <Typography.Title className="!mb-1" level={5}>{item.title}</Typography.Title>
-                            <Dropdown
-                                menu={{
-                                    onClick: info => handleAction(info.key, item.id),
-                                    items: [
-                                        { key: 'edit', label: t('common.update'), icon: <IconPhNotePencil className="text-3xl" /> },
-                                        { key: 'delete', label: t('common.delete'), icon: <IconPhTrash className="text-3xl" />, danger: true },
-                                    ],
-                                }}
-                            >
-                                <Button type="text" icon={<IconPhDotsThreeBold className="text-2xl" />}></Button>
-                            </Dropdown>
-                        </Flex>
-                    </Card>
+                    <a href={`/albums/${item.id}`} key={item.id}>
+                        <Card
+                            className="h-32 rounded-2xl overflow-hidden animate-left-in"
+                            bordered={false}
+                            styles={{
+                                body: { padding: 10 },
+                            }}
+                            style={{ animationDelay: `${i * 50}ms`, animationFillMode: 'backwards' }}
+                        >
+                            <Flex align="end" justify="space-between">
+                                <Typography.Title className="!mb-1" level={5}>{item.title}</Typography.Title>
+                                <Dropdown
+                                    trigger={['click']}
+                                    menu={{
+                                        onClick: info => handleAction(info.key, item.id),
+                                        items: [
+                                            { key: 'edit', label: t('common.update'), icon: <IconPhNotePencil className="text-3xl" /> },
+                                            { key: 'delete', label: t('common.delete'), icon: <IconPhTrash className="text-3xl" />, danger: true },
+                                        ],
+                                    }}
+                                >
+                                    <Button onClick={e => e.preventDefault()} type="text" icon={<IconPhDotsThreeBold className="text-2xl" />}></Button>
+                                </Dropdown>
+                            </Flex>
+                        </Card>
+                    </a>
                 ))}
             </>
         )

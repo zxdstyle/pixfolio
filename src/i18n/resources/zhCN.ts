@@ -30,8 +30,10 @@ const lang: ResourceLanguage = {
         success: '成功',
         deleteSuccess: '删除成功',
         createSuccess: '创建成功',
+        editSuccess: '修改成功',
     },
     common: {
+        upload: '上传',
         create: '添加',
         update: '编辑',
         delete: '删除',

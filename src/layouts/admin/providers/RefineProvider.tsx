@@ -34,6 +34,10 @@ export default function RefineProvider({ children }: PropsWithChildren) {
             }}
             resources={[
                 {
+                    name: 'home',
+                    list: '/',
+                },
+                {
                     name: 'dashboard',
                     list: '/dashboard',
                 },
