@@ -21,6 +21,17 @@ export default function RefineProvider({ children }: PropsWithChildren) {
             routerProvider={routerProvider}
             notificationProvider={useNotificationProvider}
             i18nProvider={i18nProvider}
+            options={{
+                disableTelemetry: true,
+                reactQuery: {
+                    clientConfig: {
+                        defaultOptions: {
+                            queries: { retry: false },
+                            mutations: { retry: false },
+                        },
+                    },
+                },
+            }}
             resources={[
                 {
                     name: 'dashboard',
