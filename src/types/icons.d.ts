@@ -13,6 +13,7 @@ declare global {
   const IconPhDot: typeof import('~icons/ph/dot.jsx')['default']
   const IconPhDots: typeof import('~icons/ph/dots.jsx')['default']
   const IconPhDotsThreeBold: typeof import('~icons/ph/dots-three-bold.jsx')['default']
+  const IconPhDotsThreeOutlineFill: typeof import('~icons/ph/dots-three-outline-fill.jsx')['default']
   const IconPhHome: typeof import('~icons/ph/home.jsx')['default']
   const IconPhHouseLineBold: typeof import('~icons/ph/house-line-bold.jsx')['default']
   const IconPhMore: typeof import('~icons/ph/more.jsx')['default']

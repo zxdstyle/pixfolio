@@ -43,6 +43,12 @@ const lang: ResourceLanguage = {
     },
     buttons: {
         cancel: '取消',
+        show: '详情',
+        save: '保存',
+    },
+    actions: {
+        cancel: '取消',
+        show: '详情',
         save: '保存',
     },
     driver: {
@@ -52,9 +58,8 @@ const lang: ResourceLanguage = {
         name: '存储',
         storage: '存储',
     },
-    album: {
-        name: '相册',
-        album: '相册',
+    albums: {
+        albums: '相册',
     },
 }
 

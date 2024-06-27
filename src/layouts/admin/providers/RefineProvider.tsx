@@ -48,7 +48,7 @@ export default function RefineProvider({ children }: PropsWithChildren) {
                     meta: { icon: <IconIconParkOutlineCloudStorage />, parent: 'dashboard' },
                 },
                 {
-                    name: 'album',
+                    name: 'albums',
                     list: '/albums',
                     show: '/albums/:id',
                     meta: { icon: <IconSolarAlbumBroken />, parent: 'dashboard' },

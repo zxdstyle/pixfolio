@@ -18,6 +18,7 @@ const light: ThemeConfig = {
             linkColor: '#fff',
             separatorColor: '#fff',
             linkHoverColor: '#fff',
+            lastItemColor: 'rgba(255,255,255,0.7)',
         },
         Modal: {
             borderRadiusLG: 16,

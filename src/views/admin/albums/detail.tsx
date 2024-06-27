@@ -1,56 +1,78 @@
-import { Button, Card, Flex, Space, Tag, Typography } from 'antd'
+import { Button, Flex, Space, Typography } from 'antd'
 import { useTranslation } from 'react-i18next'
+import { useList, useShow } from '@refinedev/core'
 import { Upload } from '@/components/upload'
 
 export function Component() {
     const { t } = useTranslation()
-    const data = Array.from({ length: 40 })
+    // const images = [
+    //     'https://images.pexels.com/photos/19050732/pexels-photo-19050732.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    //     'https://images.pexels.com/photos/24709246/pexels-photo-24709246.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    //     'https://images.pexels.com/photos/26615126/pexels-photo-26615126.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    //     'https://images.pexels.com/photos/18364637/pexels-photo-18364637.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    //     'https://images.pexels.com/photos/19160661/pexels-photo-19160661.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    //     'https://images.pexels.com/photos/25745487/pexels-photo-25745487.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    //     'https://images.pexels.com/photos/26691578/pexels-photo-26691578.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    //     'https://images.pexels.com/photos/23848651/pexels-photo-23848651.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    // ]
+
+    const { queryResult } = useShow<IAlbum>({
+        resource: 'albums',
+    })
+    const { data } = queryResult
+    const album = data?.data
+
+    const { data: images } = useList<IImage>({
+        resource: 'images',
+    })
+
     return (
         <div className="container">
+            {album && (
+                <Flex gap={20} vertical>
+                    <Flex gap={32} justify="space-between">
+                        <Flex vertical>
+                            <Flex align="end" gap={6}>
+                                <Typography.Title level={2} className="m-0 text-white">{album.title}</Typography.Title>
+                                <Typography.Text className="m-0 text-white/80">{album.sub_title}</Typography.Text>
+                            </Flex>
+                            <Typography.Paragraph className="text-white/40 m-0" ellipsis={{ rows: 2 }}>{album.description}</Typography.Paragraph>
+                        </Flex>
+                        <Space>
+                            <Upload>
+                                <Button className="relative" icon={<IconPhUploadSimpleBold />} ghost>
+                                    {t('common.upload')}
+                                </Button>
+                            </Upload>
+                        </Space>
+                    </Flex>
 
-            <Flex gap={20} vertical>
-                <Flex justify="space-between">
-                    <Typography.Title></Typography.Title>
-                    <Space>
-                        <Upload>
-                            <Button className="relative" icon={<IconPhUploadSimpleBold />} ghost>
-                                {t('common.upload')}
-                            </Button>
-                        </Upload>
-                    </Space>
-                </Flex>
-
-                <div className="grid grid-cols-5 gap-4">
-                    {data && data.map((item, idx) => (
-                        <Card
-                            key={idx}
-                            className="rounded-2xl overflow-hidden transition-all duration-500 animate-left-in group"
-                            bordered={false}
-                            styles={{
-                                body: { padding: 10 },
-                            }}
-                        >
+                    <div className="grid grid-cols-5 gap-4">
+                        {images && images.data.map((item, idx) => (
                             <div
-                                className="rounded-xl overflow-hidden flex items-center justify-center w-full h-32 bg-cover bg-center"
+                                key={idx}
+                                className="rounded-2xl overflow-hidden transition-all duration-500 animate-left-in group h-72 relative"
                             >
                                 <img
-                                    className="scale-125 transition-all group-hover:scale-100"
-                                    src="https://images.pexels.com/photos/26595636/pexels-photo-26595636.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                                    className="w-full h-full absolute z-0 object-cover scale-125 transition-all group-hover:scale-100"
+                                    src={item.path}
                                     alt=""
                                 />
+
+                                <div className="relative w-full h-full">
+                                    <Flex justify="space-between" className="bg-gradient-to-b from-black/50 to-black/0">
+                                        <Flex className="p-2" vertical>
+                                            <Typography.Text className="text-white font-bold">Portfolio Title</Typography.Text>
+                                            <Typography.Text className="text-white">7张作品</Typography.Text>
+                                        </Flex>
+                                        <Button type="text" icon={<IconPhDotsThreeOutlineFill className="text-white" />} />
+                                    </Flex>
+                                </div>
                             </div>
-                            <Flex vertical>
-                                <Typography.Title className="!mb-1" level={5}>Portfolio Title</Typography.Title>
-                                <Typography.Paragraph className="!mb-1">is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy. Title</Typography.Paragraph>
-                            </Flex>
-                            <Flex>
-                                <Tag bordered={false}>Webp</Tag>
-                                <Tag bordered={false}>10MB</Tag>
-                            </Flex>
-                        </Card>
-                    ))}
-                </div>
-            </Flex>
+                        ))}
+                    </div>
+                </Flex>
+            )}
         </div>
     )
 }

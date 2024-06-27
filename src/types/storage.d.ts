@@ -11,6 +11,7 @@ interface IAlbum {
     id: number
     title: string
     sub_title: string
+    cover: string
     description: string
     created_at: string
     updated_at: string
@@ -53,3 +54,12 @@ interface ExifItem {
 }
 
 type Enums = Record<string, string>
+
+interface IImage {
+    id: number
+    path: string
+    ext: string
+    size: number
+    created_at: string
+    updated_at: string
+}
