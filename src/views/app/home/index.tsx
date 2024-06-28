@@ -1,29 +1,28 @@
-import { Masonry, ResponsiveMasonry } from '@/components/masonry'
+import mapbox from 'mapbox-gl'
+import { useEffect, useRef } from 'react'
+import 'mapbox-gl/dist/mapbox-gl.css'
+import MapboxLanguage from '@mapbox/mapbox-gl-language'
 
-function getRandomNumber(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min + 1)) + min
-}
+mapbox.accessToken = 'pk.eyJ1IjoiZGFuZHl3ZW5nIiwiYSI6ImNqaDRrdTN1MTEydG0zM3J5aWNtd3M0d3kifQ.cxBsW_3CNw-NGPoMjoCPQQ'
 
 export function Component() {
-    const images = Array.from({ length: 40 }).map(() => `https://placehold.co/600x${getRandomNumber(300, 1600)}`)
+    const map = useRef<mapbox.Map | null>(null)
+    const mapContainer = useRef<HTMLDivElement | null>(null)
 
+    useEffect(() => {
+        if (map.current || !mapContainer.current)
+            return
+
+        map.current = new mapbox.Map({
+            container: mapContainer.current,
+            style: `mapbox://styles/mapbox/light-v9`,
+            // center: [lng, lat],
+            // zoom,
+        })
+        const language = new MapboxLanguage({ defaultLanguage: 'zh-Hans' })
+        map.current.addControl(language)
+    }, [])
     return (
-        <div className="container">
-            <ResponsiveMasonry columnsCountBreakPoints={{ 350: 3, 750: 4, 900: 5 }}>
-                <Masonry gutter="10px">
-                    {images.map((image, index) => (
-                        <div className="overflow-hidden rounded-xl" key={index}>
-                            <img
-                                className="rounded-xl"
-                                key={index}
-                                src={image}
-                                alt=""
-                                style={{ width: '100%', display: 'block' }}
-                            />
-                        </div>
-                    ))}
-                </Masonry>
-            </ResponsiveMasonry>
-        </div>
+        <div style={{ width: '100vw', height: '100vh' }} ref={mapContainer}></div>
     )
 }
