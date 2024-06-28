@@ -21,7 +21,22 @@ export default function RefineProvider({ children }: PropsWithChildren) {
             routerProvider={routerProvider}
             notificationProvider={useNotificationProvider}
             i18nProvider={i18nProvider}
+            options={{
+                disableTelemetry: true,
+                reactQuery: {
+                    clientConfig: {
+                        defaultOptions: {
+                            queries: { retry: false },
+                            mutations: { retry: false },
+                        },
+                    },
+                },
+            }}
             resources={[
+                {
+                    name: 'home',
+                    list: '/',
+                },
                 {
                     name: 'dashboard',
                     list: '/dashboard',
@@ -33,7 +48,7 @@ export default function RefineProvider({ children }: PropsWithChildren) {
                     meta: { icon: <IconIconParkOutlineCloudStorage />, parent: 'dashboard' },
                 },
                 {
-                    name: 'album',
+                    name: 'albums',
                     list: '/albums',
                     show: '/albums/:id',
                     meta: { icon: <IconSolarAlbumBroken />, parent: 'dashboard' },
