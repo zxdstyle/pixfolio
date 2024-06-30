@@ -15,11 +15,10 @@ function Content() {
     const { data, isFetching } = useDataSource()
 
     return (
-
         <Flex vertical className="h-full w-full">
             <Navbar />
 
-            <div className="h-full flex-1 overflow-hidden relative">
+            <div className=" flex-1 overflow-auto relative">
                 <Spin spinning={isFetching}>
                     <GridView data={data} />
                 </Spin>

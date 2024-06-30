@@ -5,7 +5,7 @@ import light from '@/constants/themes/light'
 export default function Provider({ children }: PropsWithChildren) {
     return (
         <ConfigProvider theme={light}>
-            <AntdApp>
+            <AntdApp className="h-full">
                 {children}
             </AntdApp>
         </ConfigProvider>

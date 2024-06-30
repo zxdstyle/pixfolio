@@ -12,7 +12,7 @@ export function Component() {
                 <div className={styles.wrapper}>
                     <Header />
 
-                    <main className="relative container">
+                    <main className="relative container flex flex-col flex-1">
 
                         <Breadcrumb />
 
