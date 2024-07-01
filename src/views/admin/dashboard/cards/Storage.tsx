@@ -13,10 +13,10 @@ export default function Storage({ className }: Props) {
             uri="/storages"
             icon={<IconBiDeviceHdd slot="icon" className="text-white text-3xl" />}
         >
-            <h1 className="text-3xl w-32 overflow-hidden text-ellipsis">
+            <h1 className="text-3xl w-32 overflow-hidden text-ellipsis m-0">
                 <CountUp end={3} />
             </h1>
-            <h2 className="text-gray-500">存储器</h2>
+            <h2 className="text-gray-500 m-0">存储器</h2>
         </StatsCard>
     )
 }

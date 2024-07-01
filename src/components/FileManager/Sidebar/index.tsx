@@ -45,7 +45,7 @@ export default function ({ className }: Props) {
     return (
         <Flex
             style={{ borderRight: `1px solid ${token.colorSplit}`, backgroundColor: token.colorBgLayout }}
-            className={clsx(className, 'relative w-full h-full flex-shrink-0 gap-2.5 p-3')}
+            className={clsx(className, 'relative w-full h-full flex-shrink-0 gap-2.5 p-3 rounded-lg')}
             vertical
         >
             <Flex vertical className="no-scrollbar space-y-5 overflow-x-hidden overflow-y-scroll">
