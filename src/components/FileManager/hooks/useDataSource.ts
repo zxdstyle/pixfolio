@@ -1,26 +1,21 @@
-import { useInfiniteList } from '@refinedev/core'
-import { useContext, useMemo } from 'react'
-import { flat } from 'radash'
+import { useApiUrl } from '@refinedev/core'
+import { useContext, useEffect } from 'react'
 import { StorageContext } from '../context.tsx'
 
 export default function useDataSource() {
     const { currentPath, currentStorageId } = useContext(StorageContext)
-    const { data, isFetching } = useInfiniteList<FileDescription>({
-        resource: 'fs',
-        filters: [
-            { field: 'path', operator: 'eq', value: currentPath },
-            { field: 'storage_id', operator: 'eq', value: currentStorageId },
-        ],
-        queryOptions: {
-            enabled: !!currentPath && !!currentStorageId,
-        },
-    })
 
-    const allPages = useMemo(() => {
-        if (!data)
-            return []
-        return flat(data.pages.map(page => page.data))
-    }, [data])
+    let sse: EventSource | null = null
+    const apiUrl = useApiUrl()
+    useEffect(() => {
+        if (sse || !currentPath || !currentStorageId)
+            return
 
-    return { data: allPages, isFetching }
+        sse = new EventSource(`${apiUrl}/fs?path=${currentPath}&storage_id=${currentStorageId}`)
+        sse.onmessage = (e) => {
+            console.log(e.data)
+        }
+    }, [currentPath, currentStorageId])
+
+    return { data: [], isFetching: false }
 }

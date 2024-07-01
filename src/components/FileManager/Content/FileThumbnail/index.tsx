@@ -20,25 +20,34 @@ export default function FileThumbnail({ item, ...rest }: Props) {
         if (item.is_folder)
             return Folder
 
-        if (item.path.endsWith('.zip') || item.path.endsWith('.rar') || item.path.endsWith('.tar'))
-            return Archive
+        const elems = item.path.split('.')
+        const ext = elems[elems.length - 1].toLowerCase()
 
-        if (item.path.endsWith('.txt'))
-            return Text
-
-        if (item.path.endsWith('.xlsx') || item.path.endsWith('.xls') || item.path.endsWith('.csv'))
-            return Excel
-
-        if (item.path.endsWith('.doc') || item.path.endsWith('.docx'))
-            return Word
-
-        if (item.path.endsWith('.db'))
-            return DB
-
-        if (item.path.endsWith('.pdf'))
-            return PDF
-
-        return undefined
+        switch (ext) {
+            case 'zip':
+            case 'rar':
+            case 'tar':
+                return Archive
+            case 'txt':
+                return Text
+            case 'xlsx':
+            case 'xls':
+            case 'csv':
+                return Excel
+            case 'doc':
+            case 'docx':
+                return Word
+            case 'db':
+                return DB
+            case 'pdf':
+                return PDF
+            case 'png':
+            case 'jpg':
+            case 'jpeg':
+                return `http://127.0.0.1:8081/fs/thumbnail?path=${item.path}&storage_id=28`
+            default:
+                return undefined
+        }
     }, [item])
 
     const other = src ? undefined : FileExt(item.path)
