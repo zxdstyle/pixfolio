@@ -1,6 +1,7 @@
 import { Card } from 'antd'
 import type { PropsWithChildren, ReactNode } from 'react'
 import clsx from 'clsx'
+import { Link } from 'react-router-dom'
 import styles from '../styles/card.module.less'
 
 interface Props {
@@ -12,7 +13,7 @@ interface Props {
 export default function Stats({ uri, icon, children, color = 'blue', className }: PropsWithChildren<Props>) {
     return (
         <Card className={clsx('rounded-3xl shadow-lg', className)}>
-            <a className="flex gap-10" href={uri}>
+            <Link className="flex gap-10" to={uri}>
                 <button
                     type="button"
                     className={clsx(styles.statsCard, {
@@ -33,7 +34,7 @@ export default function Stats({ uri, icon, children, color = 'blue', className }
                 <div className="flex flex-col justify-center">
                     {children}
                 </div>
-            </a>
+            </Link>
         </Card>
     )
 }
