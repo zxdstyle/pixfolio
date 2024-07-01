@@ -14,7 +14,7 @@ export default function Navbar({ className }: Props) {
     const { setCurrentPath } = useContext(StorageContext)
 
     return (
-        <nav className={clsx('pb-1 pl-3 pr-5 w-full flex items-center justify-between', className)} style={{ borderBottom: `1px solid ${token.colorSplit}` }}>
+        <nav className={clsx('h-12 pb-1 pl-3 pr-5 w-full flex items-center justify-between', className)} style={{ borderBottom: `1px solid ${token.colorSplit}` }}>
             <Flex align="center" gap={6}>
                 <Button.Group>
                     <Button type="text" icon={<IconPhHouseLineBold />} onClick={() => setCurrentPath('/')} />

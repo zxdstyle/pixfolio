@@ -45,7 +45,7 @@ const MemoriedAlbumLists = memo<{
                                 />
                             )}
 
-                            <Flex vertical className="relative w-full h-full">
+                            <Flex vertical className="relative w-full h-full bg-black/10">
                                 <Flex justify="space-between" className="bg-gradient-to-b from-black/50 to-black/0">
                                     <Flex className="p-2" vertical>
                                         <Typography.Text className="text-white font-bold">Portfolio Title</Typography.Text>
