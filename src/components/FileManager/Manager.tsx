@@ -19,7 +19,7 @@ export function FileManager() {
     return (
         <ConfigProvider theme={modalStyle}>
             <div
-                className="h-full rounded-lg shadow-2xl shadow-slate-200"
+                className="h-full w-full overflow-hidden rounded-lg shadow-2xl shadow-slate-200"
                 style={{ backgroundColor: token.colorBgContainer }}
             >
                 <Provider>

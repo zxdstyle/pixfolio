@@ -1,4 +1,4 @@
-import { Flex, Spin } from 'antd'
+import { Flex } from 'antd'
 import useDataSource from '../hooks/useDataSource'
 import Footer from './Footer'
 import Overview from './Overview'
@@ -12,16 +12,14 @@ export default function () {
 }
 
 function Content() {
-    const { data, isFetching } = useDataSource()
+    const { data } = useDataSource()
 
     return (
         <Flex vertical className="h-full w-full">
             <Navbar />
 
-            <div className=" flex-1 overflow-auto relative">
-                <Spin spinning={isFetching}>
-                    <GridView data={data} />
-                </Spin>
+            <div className=" flex-1 overflow-y-auto relative">
+                <GridView data={data} />
                 <Overview />
             </div>
 
