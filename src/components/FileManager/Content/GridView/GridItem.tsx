@@ -6,12 +6,12 @@ import FileThumbnail from '../FileThumbnail'
 import { humanReadableFilesize } from '@/utils/human'
 
 interface IGridItemProps {
-    item: FileDescription
+    item: IFile
 }
 
 export default function GridItem({ item }: IGridItemProps) {
     const { setCurrentPath } = useContext(StorageContext)
-    const handleDbClick = (e: MouseEvent<HTMLLIElement>, file: FileDescription) => {
+    const handleDbClick = (e: MouseEvent<HTMLLIElement>, file: IFile) => {
         e.stopPropagation()
         e.preventDefault()
 

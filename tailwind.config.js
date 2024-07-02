@@ -1,3 +1,5 @@
+import colors from './src/constants/themes/colors'
+
 /** @type {import('tailwindcss').Config} */
 export default {
     important: true,
@@ -17,6 +19,7 @@ export default {
             },
         },
         extend: {
+            colors,
             height: {
                 18: '4.5rem',
                 128: '32rem',
@@ -64,6 +67,7 @@ export default {
                 },
             },
         },
+
     },
     plugins: [],
 }

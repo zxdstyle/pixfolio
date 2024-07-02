@@ -29,4 +29,5 @@ declare global {
   const IconTablerArrowNarrowLeft: typeof import('~icons/tabler/arrow-narrow-left.jsx')['default']
   const IconTablerDots: typeof import('~icons/tabler/dots.jsx')['default']
   const IconTablerEye: typeof import('~icons/tabler/eye.jsx')['default']
+  const IconTablerFolder: typeof import('~icons/tabler/folder.jsx')['default']
 }

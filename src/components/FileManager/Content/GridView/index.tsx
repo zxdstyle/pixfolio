@@ -1,7 +1,7 @@
 import GridItem from './GridItem'
 
 interface GridViewProps {
-    data?: FileDescription[]
+    data?: IFile[]
 }
 
 export default function GridView({ data = [] }: GridViewProps) {

@@ -1,10 +1,10 @@
 import type { ThemeConfig } from 'antd'
+import colors from './colors'
 
 const light: ThemeConfig = {
     token: {
-        colorPrimary: '#7366ff',
+        colorPrimary: colors.brand['500'],
         fontSize: 15,
-        colorTextBase: '#212529',
     },
     components: {
         Button: {

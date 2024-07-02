@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { Button, Card } from 'antd'
+import { Button } from 'antd'
 import Cartoon from '@/assets/images/cartoon.svg'
 
 interface Props {
@@ -7,8 +7,8 @@ interface Props {
 }
 export default function Profile({ className }: Props) {
     return (
-        <Card className={clsx('rounded-3xl relative', className)} styles={{ body: { padding: 0, position: 'relative', height: '100%' } }} bordered={false}>
-            <div className="w-full h-full rounded-3xl p-7 text-white" style={{ background: 'linear-gradient(103.75deg, #33B1EE -13.9%, hsl(245 100% 70%) 79.68%)' }}>
+        <div className={clsx('rounded-3xl relative shadow-2xl shadow-slate-500', className)}>
+            <div className="w-full h-full rounded-3xl p-7 text-white bg-gradient-to-br from-[#868CFF] via-[#432CF3] to-brand-500">
                 <div className="w-2/3">
                     <h4 className="font-semibold text-2xl">Welcome to cuba</h4>
                     <p>Here whats happing in your account today</p>
@@ -19,6 +19,6 @@ export default function Profile({ className }: Props) {
             <div className="absolute bottom-0 -mb-5 -right-5 animate-bounce-slow">
                 <img src={Cartoon} className="w-56" alt="cartoon" />
             </div>
-        </Card>
+        </div>
     )
 }

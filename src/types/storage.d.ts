@@ -32,35 +32,13 @@ interface AdditionItem {
     help: string
 }
 
-interface FileDescription {
+interface IFile {
     id: number
-    is_folder: boolean
     path: string
     name: string
-    mode: string
     size: number
-    created_at: string
-    accessed_at: string
-    updated_at: string
+    modified: string
+    ctime: string
+    is_folder: boolean
     thumbnail: string
-
-    exif?: ExifItem[]
-}
-
-interface ExifItem {
-    key: string
-    label: string
-    value: string
-    enums: Enums
-}
-
-type Enums = Record<string, string>
-
-interface IImage {
-    id: number
-    path: string
-    ext: string
-    size: number
-    created_at: string
-    updated_at: string
 }

@@ -12,7 +12,7 @@ interface Props {
 }
 export default function Stats({ uri, icon, children, color = 'blue', className }: PropsWithChildren<Props>) {
     return (
-        <Card className={clsx('rounded-3xl shadow-lg', className)}>
+        <Card className={clsx('rounded-3xl shadow-2xl shadow-slate-200', className)}>
             <Link className="flex gap-10" to={uri}>
                 <button
                     type="button"

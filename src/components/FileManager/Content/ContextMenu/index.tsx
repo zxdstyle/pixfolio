@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { StorageContext } from '../../context.tsx'
 
 interface Props {
-    item: FileDescription
+    item: IFile
 }
 
 export default function ContextMenu({ children, item }: PropsWithChildren<Props>) {
@@ -19,7 +19,7 @@ export default function ContextMenu({ children, item }: PropsWithChildren<Props>
 
     const navigate = useNavigate()
     const handleOpen = () => {
-        if (item.is_dir)
+        if (item.is_folder)
             navigate(`/storage?parent_dir=${item.path}`)
     }
 

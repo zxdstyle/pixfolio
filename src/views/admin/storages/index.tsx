@@ -1,9 +1,10 @@
 import { Button, Card, Dropdown, Flex, Modal, Typography } from 'antd'
+import type { BaseKey } from '@refinedev/core'
 import { useDelete, useList } from '@refinedev/core'
 import { useTranslation } from 'react-i18next'
 import { useCallback, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import type { MenuInfo } from 'rc-menu/lib/interface'
+import type { MenuInfo } from 'rc-menu/es/interface'
 import type { StorageFormInstance } from './form'
 import StorageModalForm from './form'
 
@@ -19,7 +20,7 @@ export function Component() {
 
     const { mutate } = useDelete()
     const navigate = useNavigate()
-    const handleAction = useCallback((info: MenuInfo, id: number) => {
+    const handleAction = useCallback((info: MenuInfo, id: BaseKey) => {
         info.domEvent.preventDefault()
 
         switch (info.key) {
