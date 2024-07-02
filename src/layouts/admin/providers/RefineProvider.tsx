@@ -21,6 +21,7 @@ export default function RefineProvider({ children }: PropsWithChildren) {
             routerProvider={routerProvider}
             notificationProvider={useNotificationProvider}
             i18nProvider={i18nProvider}
+            // liveProvider={sseLiveProvider('/')}
             options={{
                 disableTelemetry: true,
                 reactQuery: {
@@ -31,6 +32,7 @@ export default function RefineProvider({ children }: PropsWithChildren) {
                         },
                     },
                 },
+                liveMode: 'off',
             }}
             resources={[
                 {

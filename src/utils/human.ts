@@ -1,4 +1,6 @@
 export function humanReadableFilesize(size: number) {
+    if (!size)
+        return 0
     const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
     const mod = 1024.0
     let i = 0

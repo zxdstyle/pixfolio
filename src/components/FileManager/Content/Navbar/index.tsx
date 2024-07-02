@@ -2,6 +2,7 @@ import { Button, Flex, theme } from 'antd'
 import clsx from 'clsx'
 import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
+import QuickJumper from './QuickJumper.tsx'
 import { StorageContext } from '@/components/FileManager/context.tsx'
 
 interface Props {
@@ -22,9 +23,9 @@ export default function Navbar({ className }: Props) {
                     <Button onClick={() => navigate(+1)} type="text" icon={<IconTablerArrowNarrowLeft className="rotate-180 text-xl" />} />
                 </Button.Group>
 
-                {/* <div> */}
-                {/*    <QuickJumper /> */}
-                {/* </div> */}
+                <div>
+                    <QuickJumper />
+                </div>
             </Flex>
         </nav>
     )

@@ -1,5 +1,8 @@
 export function FileExt(file: string) {
     const fileName = getFileName(file)
+    if (!fileName)
+        return null
+
     switch (fileName) {
         case 'tsconfig.json':
             return <IconLocalTsConfig />
@@ -74,6 +77,8 @@ export function FileExt(file: string) {
 }
 
 function getFileName(filePath: string) {
+    if (!filePath)
+        return ''
     const fileArr = filePath.split('/')
     return fileArr[fileArr.length - 1]
 }

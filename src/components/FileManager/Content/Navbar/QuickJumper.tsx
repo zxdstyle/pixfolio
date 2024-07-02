@@ -11,7 +11,7 @@ export default function QuickJumper() {
     const navigate = useNavigate()
     const handleEnter: KeyboardEventHandler = (e) => {
         if (e.key === 'Enter')
-            navigate(`/storage?parent_dir=${dir}`)
+            navigate(`/storages?parent_dir=${dir}`)
     }
 
     const handleFocus: FocusEventHandler<HTMLInputElement> = (e) => {

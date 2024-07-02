@@ -22,6 +22,11 @@ export default {
                 128: '32rem',
                 160: '40rem',
             },
+            minHeight: {
+                18: '4.5rem',
+                128: '32rem',
+                160: '40rem',
+            },
             width: {
                 18: '4.5rem',
             },

@@ -9,7 +9,7 @@ export default function Overview() {
 
     const general: DescriptionsProps['items'] = description
         ? [
-            { key: 'filename', label: '文件名', children: description.filename },
+            { key: 'filename', label: '文件名', children: description.size },
             { key: 'size', label: '文件大小', children: (
                 <span>
                     {description.size}

@@ -17,6 +17,9 @@ interface Props extends ImageProps {
 }
 export default function FileThumbnail({ item, ...rest }: Props) {
     const src = useMemo(() => {
+        if (!item || !item.path)
+            return null
+
         if (item.is_folder)
             return Folder
 
@@ -44,7 +47,7 @@ export default function FileThumbnail({ item, ...rest }: Props) {
             case 'png':
             case 'jpg':
             case 'jpeg':
-                return `http://127.0.0.1:8081/fs/thumbnail?path=${item.path}&storage_id=28`
+                return item.thumbnail
             default:
                 return undefined
         }

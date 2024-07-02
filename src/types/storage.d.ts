@@ -42,6 +42,7 @@ interface FileDescription {
     created_at: string
     accessed_at: string
     updated_at: string
+    thumbnail: string
 
     exif?: ExifItem[]
 }
