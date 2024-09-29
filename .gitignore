@@ -1,0 +1,11 @@
+.idea
+.DS_Store
+.env
+*.log
+*.db
+storage/app
+storage/framework
+node_modules
+public/static
+pixfolio
+builds

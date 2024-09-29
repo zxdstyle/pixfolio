@@ -1,0 +1,57 @@
+/*.box:before {*/
+/*    content: " ";*/
+/*    position: fixed;*/
+/*    left: 0;*/
+/*    top: 0;*/
+/*    height: 100vh;*/
+/*    width: 100vw;*/
+/*    background: radial-gradient(ellipse at left top, #28282e 0%, #000000 70%);*/
+/*    color: gray;*/
+/*}*/
+.container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    z-index: 40;
+}
+
+.photo {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("../../../assets/images/007.jpg");
+}
+
+.content {
+    background: radial-gradient(ellipse at left top, #28282e 0%, #000000 70%);
+    z-index: 45;
+}
+
+.line {
+    position: fixed;
+    width: 0;
+    display: flex;
+    justify-content: flex-start;
+    transform-origin: 0 0;
+    transform: rotate(-90deg) translate(0,0);
+    cursor: default;
+    left: calc(33.33% - 21px);
+    text-align: center;
+    padding: 0;
+    top: 100%;
+}
+
+.line:before {
+    content: "";
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,.15);
+    position: absolute;
+    left: 0;
+    top: 21px;
+}

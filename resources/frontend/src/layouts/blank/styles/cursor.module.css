@@ -1,0 +1,5 @@
+.cursor {
+    @apply fixed w-8 h-8 z-top pointer-events-none;
+    transition: transform .1s,border .3s,box-shadow .3s
+}
+

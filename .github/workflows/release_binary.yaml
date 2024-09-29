@@ -1,0 +1,88 @@
+name: Release Binaries
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    name: Build Binary
+    runs-on: ${{ matrix.os }}
+    env:
+      CGO_CFLAGS_ALLOW: -Xpreprocessor
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-13, macOS-latest]
+        include:
+          - os: ubuntu-latest
+            output: pixfolio-linux-amd64
+
+          - os: macOS-13
+            output: pixfolio-darwin-amd64
+
+          - os: macOS-latest
+            output: pixfolio-darwin-arm64
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ^1.23
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install linux deps
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get install libvips-dev
+
+      - name: Install macos deps
+        if: matrix.os == 'macOS-13' || matrix.os == 'macOS-latest'
+        run: |
+          brew install vips
+
+      - name: Install dependencies
+        run: |
+          go mod download
+
+      - name: Make binary
+        run: go build -o ${{ matrix.output }} .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.output }}
+          path: ${{ matrix.output }}
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: pixfolio-linux-amd64
+          path: ./builds/pixfolio-linux-amd64
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: pixfolio-darwin-amd64
+          path: ./builds/pixfolio-darwin-amd64
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: pixfolio-darwin-arm64
+          path: ./builds/pixfolio-darwin-arm64
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          title: "pixfolio ${{ github.ref_name }}"
+          files: |
+            builds/pixfolio-linux-amd64
+            builds/pixfolio-darwin-amd64
+            builds/pixfolio-darwin-arm64
