@@ -12,21 +12,7 @@ var defaultEnv embed.FS
 func init() {
 	createDirIfNotExist("./storage/app/")
 
-	_, err := os.Stat(".env")
-	if err == nil {
-		return
-	}
-
-	if os.IsNotExist(err) {
-		def, err := defaultEnv.ReadFile(".env.example")
-		if err != nil {
-			panic(err)
-		}
-
-		if err := os.WriteFile(".env", def, 0644); err != nil {
-			panic(err)
-		}
-	}
+	checkEnv()
 }
 
 func createDirIfNotExist(dir string) {
@@ -46,4 +32,22 @@ func createDirIfNotExist(dir string) {
 		}
 	}
 
+}
+
+func checkEnv() {
+	_, err := os.Stat(".env")
+	if err == nil {
+		return
+	}
+
+	if os.IsNotExist(err) {
+		def, err := defaultEnv.ReadFile(".env.example")
+		if err != nil {
+			panic(err)
+		}
+
+		if err := os.WriteFile(".env", def, 0644); err != nil {
+			panic(err)
+		}
+	}
 }

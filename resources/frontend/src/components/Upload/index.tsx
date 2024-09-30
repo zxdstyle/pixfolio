@@ -18,7 +18,7 @@ import { createMemo, createSignal, For, Match, Show, Switch } from 'solid-js'
 import { createStore } from 'solid-js/store'
 import { Trigger } from './Trigger'
 
-type Status = 'pending' | 'success' | 'error'
+type Status = 'pending' | 'uploading' | 'success' | 'error'
 interface FileList {
     rawFile: UploadFile
     status: Status
@@ -52,7 +52,7 @@ export function Upload() {
             if (item.status === 'success') {
                 return
             }
-            setStatus(item.rawFile.source, 'pending')
+            setStatus(item.rawFile.source, 'uploading')
             const data = new FormData()
             data.append('file', item.rawFile.file)
             instance(`${apiUrl}/photos`, {
@@ -107,6 +107,9 @@ export function Upload() {
                                                 <Switch>
                                                     <Match when={item.status === 'pending'}>
                                                         <Badge variant="secondary">{item.status}</Badge>
+                                                    </Match>
+                                                    <Match when={item.status === 'uploading'}>
+                                                        <Badge variant="processing">{item.status}</Badge>
                                                     </Match>
                                                     <Match when={item.status === 'error'}>
                                                         <Badge variant="destructive">{item.status}</Badge>

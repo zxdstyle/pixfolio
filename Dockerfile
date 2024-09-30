@@ -12,7 +12,6 @@ FROM golang:1.23-bookworm AS builder
 
 ENV GO111MODULE=on \
     CGO_ENABLED=1  \
-#    GOARCH="amd64" \
     GOOS=linux
 
 RUN apt-get update && apt-get install libvips-dev -y
@@ -39,6 +38,4 @@ EXPOSE 3001
 
 VOLUME ["/www/storage/app"]
 
-ENTRYPOINT ["sh", "-c"]
-
-CMD ["/www/pixfolio artisan install && /www/pixfolio artisan serve"]
+CMD ["/www/pixfolio", "artisan", "serve"]

@@ -1,14 +1,13 @@
 package commands
 
 import (
-	"errors"
 	"github.com/goravel/framework/contracts/console"
 	"github.com/goravel/framework/contracts/console/command"
 	"github.com/goravel/framework/database/gorm"
-	"github.com/goravel/framework/database/orm"
 	"github.com/goravel/framework/facades"
 	"github.com/goravel/framework/support/str"
 	"github.com/zxdstyle/pixfolio/app/models"
+	"os"
 )
 
 type Install struct {
@@ -31,6 +30,12 @@ func (receiver *Install) Extend() command.Extend {
 
 // Handle Execute the console command.
 func (receiver *Install) Handle(ctx console.Context) error {
+	const installed = "storage/app/.installed"
+	_, err := os.Stat(installed)
+	if err == nil {
+		return nil
+	}
+
 	ctx.Info("初始化环境...")
 
 	facades.Artisan().Call("key:generate")
@@ -61,42 +66,21 @@ func (receiver *Install) Handle(ctx console.Context) error {
 		return err
 	}
 
-	var user models.User
-	err = facades.Orm().Query().Where("`username` = ?", "admin").First(&user)
-	if err != nil && !errors.Is(err, orm.ErrRecordNotFound) {
+	err = facades.Orm().Query().Create(&models.User{
+		Username: "admin",
+		Password: hashPwd,
+	})
+	if err != nil {
 		return err
 	}
-	//result := "ok"
-	//if user.ID > 0 {
-	//	result, err = ctx.Choice("管理员账号已存在，是否重新创建？", []console.Choice{
-	//		{Key: "保留原账号", Selected: true, Value: "ok"},
-	//		{Key: "重新创建管理员账号", Selected: false, Value: "delete"},
-	//	})
-	//	if err != nil {
-	//		return err
-	//	}
-	//}
-	//
-	//if result == "delete" {
-	//	_, err := facades.Orm().Query().Where("`username` = ?", "admin").Delete(&models.User{})
-	//	if err != nil {
-	//		return err
-	//	}
-	//	ctx.Info("已删除原管理员账号!")
-	//}
 
-	if user.ID == 0 { //|| result == "delete" {
-		err = facades.Orm().Query().Create(&models.User{
-			Username: "admin",
-			Password: hashPwd,
-		})
-		if err != nil {
-			return err
-		}
-		ctx.Info("创建管理员账号成功!")
-		ctx.Info("账号: admin")
-		ctx.Info("密码: " + pwd)
+	if err := os.WriteFile(installed, []byte("installed"), os.ModePerm); err != nil {
+		return err
 	}
+
+	ctx.Info("创建管理员账号成功!")
+	ctx.Info("账号: admin")
+	ctx.Info("密码: " + pwd)
 	ctx.Info("初始化环境完成")
 	ctx.Info("安装成功!")
 
