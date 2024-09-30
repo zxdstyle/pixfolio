@@ -66,26 +66,26 @@ func (receiver *Install) Handle(ctx console.Context) error {
 	if err != nil && !errors.Is(err, orm.ErrRecordNotFound) {
 		return err
 	}
-	result := "ok"
-	if user.ID > 0 {
-		result, err = ctx.Choice("管理员账号已存在，是否重新创建？", []console.Choice{
-			{Key: "保留原账号", Selected: true, Value: "ok"},
-			{Key: "重新创建管理员账号", Selected: false, Value: "delete"},
-		})
-		if err != nil {
-			return err
-		}
-	}
+	//result := "ok"
+	//if user.ID > 0 {
+	//	result, err = ctx.Choice("管理员账号已存在，是否重新创建？", []console.Choice{
+	//		{Key: "保留原账号", Selected: true, Value: "ok"},
+	//		{Key: "重新创建管理员账号", Selected: false, Value: "delete"},
+	//	})
+	//	if err != nil {
+	//		return err
+	//	}
+	//}
+	//
+	//if result == "delete" {
+	//	_, err := facades.Orm().Query().Where("`username` = ?", "admin").Delete(&models.User{})
+	//	if err != nil {
+	//		return err
+	//	}
+	//	ctx.Info("已删除原管理员账号!")
+	//}
 
-	if result == "delete" {
-		_, err := facades.Orm().Query().Where("`username` = ?", "admin").Delete(&models.User{})
-		if err != nil {
-			return err
-		}
-		ctx.Info("已删除原管理员账号!")
-	}
-
-	if user.ID == 0 || result == "delete" {
+	if user.ID == 0 { //|| result == "delete" {
 		err = facades.Orm().Query().Create(&models.User{
 			Username: "admin",
 			Password: hashPwd,
