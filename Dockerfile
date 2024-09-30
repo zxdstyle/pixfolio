@@ -37,7 +37,7 @@ COPY --from=builder /build/resources/views /www/resources/views
 #COPY --from=builder /build/.env /www/.env
 EXPOSE 3001
 
-VOLUME ["/www/app"]
+VOLUME ["/www/storage/app"]
 
 ENTRYPOINT ["sh", "-c"]
 

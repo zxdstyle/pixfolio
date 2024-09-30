@@ -20,7 +20,7 @@
 
 ### Docker 一键部署
 ```
-    docker run -p 3001:3001 -it zxdstyle/pixfolio
+    docker run -p 3001:3001 -v /Users/zxdstyle/pixfolio:/www/storage/app -it zxdstyle/pixfolio
 ```
 
 ### 二进制文件部署
