@@ -30,12 +30,13 @@
 
 ### 源码构建
 1. 克隆 [GitHub 存储库](https://github.com/zxdstyle/pixfolio) 来拉取 Pixfolio 源代码：
-    ```
-    git clone https://github.com/zxdstyle/pixfolio.git
+ ```
+ git clone https://github.com/zxdstyle/pixfolio.git
+
+ cd pixfolio
+
+ go build
+ 
+ ./pixfolio artisan install && ./pixfolio artisan serve
+```
    
-    cd pixfolio
-   
-    go build
-    
-    ./pixfolio artisan install && ./pixfolio artisan serve
-   ```
