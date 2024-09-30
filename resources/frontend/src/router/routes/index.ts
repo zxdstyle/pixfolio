@@ -14,15 +14,15 @@ const routes: RouteDefinition[] = [
                 children: [
                     {
                         path: '/',
-                        component: lazy(() => import(/* webpackChunkName: "home" */'@/views/home')),
+                        component: lazy(() => import('@/views/home')),
                     },
                     {
                         path: '/album',
-                        component: lazy(() => import(/* webpackChunkName: "album" */'@/views/album')),
+                        component: lazy(() => import('@/views/album')),
                     },
                     {
                         path: '/album/:id',
-                        component: lazy(() => import(/* webpackChunkName: "album-detail" */'@/views/album/detail')),
+                        component: lazy(() => import('@/views/album/detail')),
                     },
                 ],
             },
@@ -32,15 +32,19 @@ const routes: RouteDefinition[] = [
                 children: [
                     {
                         path: '',
-                        component: lazy(() => import(/* webpackChunkName: "dashboard" */'@/views/admin/dashboard')),
+                        component: lazy(() => import('@/views/admin/dashboard')),
                     },
                     {
                         path: 'album',
-                        component: lazy(() => import(/* webpackChunkName: "admin-album" */'@/views/admin/album')),
+                        component: lazy(() => import('@/views/admin/album')),
                     },
                     {
                         path: 'album/:id/photos',
-                        component: lazy(() => import(/* webpackChunkName: "admin-photo" */'@/views/admin/photo')),
+                        component: lazy(() => import('@/views/admin/photo')),
+                    },
+                    {
+                        path: 'change-password',
+                        component: lazy(() => import('@/views/admin/change-password')),
                     },
                 ],
             },

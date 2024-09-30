@@ -18,6 +18,9 @@ export function Profile() {
         localStorage.removeItem('authorization')
         navigate('/')
     }
+    const handleChangePwd = () => {
+        navigate('/admin/change-password')
+    }
 
     return (
         <Show when={user()}>
@@ -40,10 +43,12 @@ export function Profile() {
                         </DropdownMenuItemLabel>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleLogout} class="text-black/70">
+
+                    <DropdownMenuItem onClick={handleChangePwd} class="text-black/70">
                         <IconTablerLockOpen />
                         修改密码
                     </DropdownMenuItem>
+
                     <DropdownMenuItem onClick={handleLogout} class="text-black/70">
                         <IconTablerLogout2 />
                         退出
