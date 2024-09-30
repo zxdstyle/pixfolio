@@ -14,6 +14,7 @@ export default function ChangePassword() {
         successNotification: {
             type: 'success',
             description: '修改密码成功,请使用新密码重新登录',
+            message: '',
         },
     })
 
@@ -23,7 +24,7 @@ export default function ChangePassword() {
             values,
         }, {
             onSuccess: () => {
-                localStorage.removeItem('authentication')
+                localStorage.removeItem('authorization')
                 navigate('/login')
             },
         })
