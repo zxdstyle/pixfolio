@@ -143,32 +143,40 @@ func (r *Controller[M, K]) Destroy(ctx http.Context) http.Response {
 
 func (r *Controller[M, K]) fetchColumnMeta() {
 	var m M
-	t := reflect.TypeOf(m)
-	if t.Kind() != reflect.Struct {
-		return
-	}
+	r.columns = fetchFields(m)
+}
 
-	var (
-		num     = t.NumField()
-		columns = make(map[string]base.ColumnMeta)
-	)
-	for i := 0; i < num; i++ {
+func fetchFields(mo any) map[string]base.ColumnMeta {
+	val := reflect.ValueOf(mo)
+	typeOfVal := val.Type()
+	columns := make(map[string]base.ColumnMeta)
+	for i := 0; i < val.NumField(); i++ {
 		var (
-			field     = t.Field(i)
-			name      = field.Tag.Get("json")
-			filterStr = field.Tag.Get("filters")
+			field     = val.Field(i)
+			fieldType = typeOfVal.Field(i)
+
+			name      = fieldType.Tag.Get("json")
+			filterStr = fieldType.Tag.Get("filters")
 			elements  = strings.Split(filterStr, ",")
 
 			filters = make(map[string]struct{})
 		)
 
 		for _, filter := range elements {
-			filters[filter] = struct{}{}
+			if len(filter) > 0 {
+				filters[filter] = struct{}{}
+			}
 		}
 
-		columns[name] = base.ColumnMeta{
-			Filters: filters,
+		if field.Kind() == reflect.Struct && field.CanInterface() {
+			for key, value := range fetchFields(field.Interface()) {
+				columns[key] = value
+			}
+		} else if len(name) > 0 {
+			columns[name] = base.ColumnMeta{
+				Filters: filters,
+			}
 		}
 	}
-	r.columns = columns
+	return columns
 }

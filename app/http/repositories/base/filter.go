@@ -52,7 +52,7 @@ func BuildFilter(ctx http.Context, columns map[string]ColumnMeta) ([]Filter, err
 			return nil, fmt.Errorf("field '%s' not found", field)
 		}
 
-		if _, ex := col.Filters[operator]; !ex {
+		if _, ex := col.Filters[operator]; !ex && !strings.HasSuffix(field, "id") {
 			return nil, fmt.Errorf("field '%s' not support operator '%s'", field, operator)
 		}
 
