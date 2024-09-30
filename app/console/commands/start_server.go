@@ -36,8 +36,6 @@ func (receiver *StartServer) Extend() command.Extend {
 
 // Handle Execute the console command.
 func (receiver *StartServer) Handle(ctx console.Context) error {
-	install()
-
 	routes.Web()
 	routes.Api()
 
@@ -67,8 +65,4 @@ func (receiver *StartServer) Handle(ctx console.Context) error {
 	}
 	facades.Log().Info("Server exited gracefully")
 	return nil
-}
-
-func install() {
-	facades.Artisan().Call("install")
 }

@@ -33,9 +33,14 @@ COPY --from=builder /build/pixfolio /www/
 #COPY --from=builder /build/public/ /www/public/
 #COPY --from=builder /build/storage/ /www/storage/
 COPY --from=builder /build/resources/views /www/resources/views
+COPY --from=builder /build/start.sh /www/start.sh
 #COPY --from=builder /build/.env /www/.env
 EXPOSE 3001
 
+RUN chmod +x /www/start.sh
+
+ENV MALLOC_ARENA_MAX=2
+
 VOLUME ["/www/storage/app"]
 
-CMD ["/www/pixfolio", "artisan", "serve"]
+ENTRYPOINT ["./start.sh"]

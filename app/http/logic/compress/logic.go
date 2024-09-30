@@ -25,7 +25,7 @@ type (
 )
 
 func New() *Logic {
-	pool, _ := ants.NewPool(1000)
+	pool, _ := ants.NewPool(100)
 	l := &Logic{
 		queue: make(chan compressTask, 32),
 		pool:  pool,
@@ -75,6 +75,7 @@ func (l *Logic) doCompress(photoId uint64, source string) error {
 	if err != nil {
 		return err
 	}
+	defer img.Close()
 
 	params := vips.NewWebpExportParams()
 	params.Quality = 50
